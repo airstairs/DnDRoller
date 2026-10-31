@@ -16,7 +16,7 @@
             padding: 0;
             overflow: hidden;
             background-color: #0d0608;
-			color: #f1f5f9; /* Forces default text to light slate */
+            color: #f1f5f9; /* Forces default text to light slate */
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             user-select: none;
             -webkit-user-select: none;
@@ -81,6 +81,15 @@
             background: rgba(244, 63, 94, 0.7);
         }
 
+        /* Smooth horizontal scrolling for shortcuts */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
         /* Swipe Hint Animation */
         @keyframes swipeHint {
             0% { transform: translate(-50%, 0) scale(1); opacity: 0.8; }
@@ -121,40 +130,40 @@
         </div>
 
         <!-- Quick Game Formula Presets, Add Preset, Trashcan, & Clear Buttons -->
-        <div class="flex items-center gap-2 pointer-events-auto w-full md:w-auto justify-center">
-            <div class="glass-panel px-3 py-2 rounded-2xl flex items-center gap-2 overflow-x-auto max-w-full shadow-lg">
-                <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-1 hidden lg:flex items-center gap-1">
+        <div class="flex items-center gap-2 pointer-events-auto w-full md:w-auto justify-center min-w-0">
+            <div class="glass-panel px-3 py-2 rounded-2xl flex items-center gap-2 overflow-x-auto max-w-full shadow-lg min-w-0 flex-1 md:flex-initial">
+                <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-1 hidden lg:flex items-center gap-1 shrink-0">
                     <svg class="w-3.5 h-3.5 text-rose-400 fill-current" viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>Shortcuts:
                 </span>
                 
                 <!-- Dynamic Shortcuts Container -->
-                <div id="shortcuts-container" class="flex items-center gap-2"></div>
+                <div id="shortcuts-container" class="flex items-center gap-2 overflow-x-auto no-scrollbar min-w-0"></div>
 
                 <!-- Add Shortcut Button (+) -->
-                <button onclick="openSaveShortcutModal()" title="Save Current Config as Shortcut" class="glass-button px-3.5 py-2 rounded-xl text-xs font-bold text-rose-400 hover:text-rose-300 flex items-center justify-center whitespace-nowrap shadow-md">
+                <button onclick="openSaveShortcutModal()" title="Save Current Config as Shortcut" class="glass-button px-3.5 py-2 rounded-xl text-xs font-bold text-rose-400 hover:text-rose-300 flex items-center justify-center whitespace-nowrap shadow-md shrink-0">
                     <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
                 </button>
 
                 <!-- Delete Shortcut Manager Button (Trashcan) -->
-                <button onclick="openDeleteShortcutModal()" title="Manage/Delete Shortcuts" class="glass-button px-3.5 py-2 rounded-xl text-xs font-bold text-amber-400 hover:text-amber-300 flex items-center justify-center whitespace-nowrap shadow-md ml-0.5">
+                <button onclick="openDeleteShortcutModal()" title="Manage/Delete Shortcuts" class="glass-button px-3.5 py-2 rounded-xl text-xs font-bold text-amber-400 hover:text-amber-300 flex items-center justify-center whitespace-nowrap shadow-md ml-0.5 shrink-0">
                     <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
                 </button>
 
                 <!-- Clear Board Button -->
-                <button onclick="clearDice()" title="Clear Board" class="glass-button px-3.5 py-2 rounded-xl text-xs font-semibold text-rose-400 hover:text-rose-300 whitespace-nowrap ml-0.5 flex items-center gap-1.5">
+                <button onclick="clearDice()" title="Clear Board" class="glass-button px-3.5 py-2 rounded-xl text-xs font-semibold text-rose-400 hover:text-rose-300 whitespace-nowrap ml-0.5 flex items-center gap-1.5 shrink-0">
                     <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg> <span class="hidden sm:inline">Clear</span>
                 </button>
             </div>
 
             <!-- Mobile Log Toggle Button -->
-            <button onclick="toggleMobileLog()" class="glass-button md:hidden px-4 py-2.5 rounded-2xl text-xs font-bold text-rose-400 flex items-center gap-2 shadow-lg whitespace-nowrap">
+            <button onclick="toggleMobileLog()" class="glass-button md:hidden px-4 py-2.5 rounded-2xl text-xs font-bold text-rose-400 flex items-center gap-2 shadow-lg whitespace-nowrap shrink-0">
                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg> <span id="log-toggle-text">Log</span>
             </button>
         </div>
     </header>
 
     <!-- ROLL HISTORY LOG (Desktop Sidebar & Mobile Drawer) -->
-    <aside id="roll-log-panel" class="absolute top-24 md:top-28 right-3 md:right-4 z-30 w-72 max-h-[55vh] md:max-h-[calc(100vh-200px)] glass-panel rounded-2xl p-3.5 flex flex-col transition-all pointer-events-auto shadow-2xl translate-y-full opacity-0 md:translate-y-0 md:opacity-100 pointer-events-none md:pointer-events-auto" style="transition: transform 0.3s ease, opacity 0.3s ease;">
+    <aside id="roll-log-panel" class="absolute top-24 md:top-28 right-3 md:right-4 z-30 w-72 max-h-[55vh] md:max-h-[calc(100vh-200px)] glass-panel rounded-2xl p-3.5 flex flex-col transition-all shadow-2xl translate-y-full opacity-0 md:translate-y-0 md:opacity-100 pointer-events-none md:pointer-events-auto" style="transition: transform 0.3s ease, opacity 0.3s ease;">
         <div class="flex items-center justify-between pb-2.5 mb-2 border-b border-rose-950/60">
             <h3 class="cinzel-font text-xs font-bold text-slate-200 tracking-wider flex items-center gap-2">
                 <svg class="w-3.5 h-3.5 text-rose-400 fill-current" viewBox="0 0 24 24"><path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg> Roll History
@@ -169,14 +178,15 @@
         </div>
     </aside>
 
-    <!-- RESULT DISPLAY OVERLAY (Center Top) -->
-    <div id="result-overlay" class="pointer-events-none fixed top-24 sm:top-24 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center opacity-0 scale-90 transition-all duration-300">
-        <div class="glass-panel border-2 border-rose-500/80 px-6 sm:px-8 py-3.5 rounded-3xl flex flex-col items-center shadow-2xl neon-border">
-            <span id="result-formula" class="text-xs font-bold uppercase tracking-widest text-rose-400 mb-0.5">Total Result</span>
-            <div id="result-total" class="cinzel-font text-5xl sm:text-6xl font-extrabold text-slate-100 neon-glow">0</div>
-            <div id="result-breakdown" class="text-xs font-medium text-slate-300 mt-1.5 max-w-xs text-center leading-relaxed">
+    <!-- RESULT DISPLAY OVERLAY (Centered On Screen & Dismissable on Tap) -->
+    <div id="result-overlay" onclick="hideResultOverlay()" class="pointer-events-auto cursor-pointer fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 flex flex-col items-center opacity-0 scale-90 pointer-events-none transition-all duration-300">
+        <div class="glass-panel border-2 border-rose-500/80 px-8 sm:px-10 py-5 sm:py-6 rounded-3xl flex flex-col items-center shadow-2xl neon-border hover:border-rose-400 transition-all">
+            <span id="result-formula" class="text-xs font-bold uppercase tracking-widest text-rose-400 mb-1">Total Result</span>
+            <div id="result-total" class="cinzel-font text-6xl sm:text-7xl font-extrabold text-slate-100 neon-glow">0</div>
+            <div id="result-breakdown" class="text-xs font-medium text-slate-300 mt-2 max-w-xs text-center leading-relaxed">
                 Dice: -
             </div>
+            <span class="text-[10px] uppercase tracking-widest text-slate-400/80 mt-3 font-semibold">Tap anywhere to dismiss</span>
         </div>
     </div>
 
@@ -187,7 +197,7 @@
         <div class="glass-panel p-3 rounded-3xl flex flex-wrap items-center justify-center gap-2 max-w-3xl w-full pointer-events-auto shadow-2xl">
             <button onclick="addDie('d4')" class="glass-button px-4 py-2.5 sm:px-4 sm:py-2.5 rounded-2xl flex flex-col items-center justify-center gap-0.5 text-slate-200 flex-1 min-w-[65px]">
                 <span class="text-xs font-bold text-rose-400">d4</span>
-                <span class-[10px] sm:text-[9px] text-slate-400 font-semibold">Pyramid</span>
+                <span class="text-[10px] sm:text-[9px] text-slate-400 font-semibold">Pyramid</span>
             </button>
             <button onclick="addDie('d6')" class="glass-button px-4 py-2.5 sm:px-4 sm:py-2.5 rounded-2xl flex flex-col items-center justify-center gap-0.5 text-slate-200 flex-1 min-w-[65px]">
                 <span class="text-xs font-bold text-rose-400">d6</span>
@@ -316,7 +326,7 @@
 
         const POLYHEDRA_DATA = {};
 
-        // Default Presets as specified
+        // Default Presets
         const DEFAULT_SHORTCUTS = [
             { key: 'd20', name: '1d20', dice: ['d20'], modifier: 0 },
             { key: 'adv', name: 'Adv', dice: ['d20', 'd20'], modifier: 0 },
@@ -401,7 +411,7 @@
             container.innerHTML = '';
             userShortcuts.forEach(sc => {
                 const btn = document.createElement('button');
-                btn.className = 'glass-button px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-rose-400 whitespace-nowrap';
+                btn.className = 'glass-button px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-rose-400 whitespace-nowrap shrink-0';
                 btn.innerText = sc.name;
                 btn.onclick = () => applyShortcut(sc.key);
                 container.appendChild(btn);
@@ -1079,14 +1089,14 @@
 
         function showResultOverlay() {
             const overlay = document.getElementById('result-overlay');
-            overlay.classList.remove('opacity-0', 'scale-90');
-            overlay.classList.add('opacity-100', 'scale-100');
+            overlay.classList.remove('opacity-0', 'scale-90', 'pointer-events-none');
+            overlay.classList.add('opacity-100', 'scale-100', 'pointer-events-auto');
         }
 
         function hideResultOverlay() {
             const overlay = document.getElementById('result-overlay');
-            overlay.classList.remove('opacity-100', 'scale-100');
-            overlay.classList.add('opacity-0', 'scale-90');
+            overlay.classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
+            overlay.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
         }
 
         function hideSwipeHint() {
