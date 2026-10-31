@@ -1,0 +1,20 @@
+{
+  "allFiles": [
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/DnDRoller/app/src/main/assets/index.html",
+      "selection": {
+        "end": {
+          "column": 0,
+          "index": 60531,
+          "line": 1224
+        },
+        "start": {
+          "column": 0,
+          "index": 60531,
+          "line": 1224
+        }
+      }
+    }
+  ],
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/DnDRoller/app/src/main/assets/index.html"
+}
